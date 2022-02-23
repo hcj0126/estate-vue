@@ -205,6 +205,17 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+            <!--自己新增的模块-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-his</artifactId>
+                <version>3.7.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-estate</artifactId>
+                <version>3.7.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -215,13 +226,10 @@
         <module>ruoyi-quartz</module>
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
+        <module>ruoyi-his</module>
+        <module>ruoyi-estate</module>
     </modules>
     <packaging>pom</packaging>
-
-
-    <dependencies>
-
-    </dependencies>
 
     <build>
         <plugins>

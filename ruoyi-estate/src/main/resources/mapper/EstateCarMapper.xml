@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.estate.mapper.EstateCarMapper">
+    
+    <resultMap type="EstateCar" id="EstateCarResult">
+        <result property="id"    column="id"    />
+        <result property="carPicture"    column="car_picture"    />
+        <result property="ownerId"    column="owner_id"    />
+        <result property="carColor"    column="car_color"    />
+        <result property="carNumber"    column="car_number"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectEstateCarVo">
+        select id, car_picture, owner_id, car_color, car_number, create_by, create_time, update_by, update_time, remark from estate_car
+    </sql>
+
+    <select id="selectEstateCarList" parameterType="EstateCar" resultMap="EstateCarResult">
+        <include refid="selectEstateCarVo"/>
+        <where>  
+            <if test="carPicture != null  and carPicture != ''"> and car_picture = #{carPicture}</if>
+            <if test="ownerId != null "> and owner_id = #{ownerId}</if>
+            <if test="carColor != null  and carColor != ''"> and car_color = #{carColor}</if>
+            <if test="carNumber != null  and carNumber != ''"> and car_number = #{carNumber}</if>
+        </where>
+    </select>
+    
+    <select id="selectEstateCarById" parameterType="Long" resultMap="EstateCarResult">
+        <include refid="selectEstateCarVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertEstateCar" parameterType="EstateCar" useGeneratedKeys="true" keyProperty="id">
+        insert into estate_car
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="carPicture != null">car_picture,</if>
+            <if test="ownerId != null">owner_id,</if>
+            <if test="carColor != null">car_color,</if>
+            <if test="carNumber != null">car_number,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="carPicture != null">#{carPicture},</if>
+            <if test="ownerId != null">#{ownerId},</if>
+            <if test="carColor != null">#{carColor},</if>
+            <if test="carNumber != null">#{carNumber},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEstateCar" parameterType="EstateCar">
+        update estate_car
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="carPicture != null">car_picture = #{carPicture},</if>
+            <if test="ownerId != null">owner_id = #{ownerId},</if>
+            <if test="carColor != null">car_color = #{carColor},</if>
+            <if test="carNumber != null">car_number = #{carNumber},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEstateCarById" parameterType="Long">
+        delete from estate_car where id = #{id}
+    </delete>
+
+    <delete id="deleteEstateCarByIds" parameterType="String">
+        delete from estate_car where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

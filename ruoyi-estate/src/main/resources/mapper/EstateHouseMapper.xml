@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.estate.mapper.EstateHouseMapper">
+    
+    <resultMap type="EstateHouse" id="EstateHouseResult">
+        <result property="id"    column="id"    />
+        <result property="communityName"    column="community_name"    />
+        <result property="communityId"    column="community_id"    />
+        <result property="buildingName"    column="building_name"    />
+        <result property="buildingId"    column="building_id"    />
+        <result property="houseCode"    column="house_code"    />
+        <result property="houseName"    column="house_name"    />
+        <result property="ownerId"    column="owner_id"    />
+        <result property="ownerName"    column="owner_name"    />
+        <result property="telephone"    column="telephone"    />
+        <result property="roomNum"    column="room_num"    />
+        <result property="unit"    column="unit"    />
+        <result property="floor"    column="floor"    />
+        <result property="description"    column="description"    />
+        <result property="liveTime"    column="live_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectEstateHouseVo">
+        select id, community_name, community_id, building_name, building_id, house_code, house_name, owner_id, owner_name, telephone, room_num, unit, floor, description, live_time, create_by, create_time, update_by, update_time, remark from estate_house
+    </sql>
+
+    <select id="selectEstateHouseList" parameterType="EstateHouse" resultMap="EstateHouseResult">
+        <include refid="selectEstateHouseVo"/>
+        <where>  
+            <if test="communityName != null  and communityName != ''"> and community_name like concat('%', #{communityName}, '%')</if>
+            <if test="communityId != null "> and community_id = #{communityId}</if>
+            <if test="buildingName != null  and buildingName != ''"> and building_name like concat('%', #{buildingName}, '%')</if>
+            <if test="buildingId != null "> and building_id = #{buildingId}</if>
+            <if test="houseCode != null  and houseCode != ''"> and house_code = #{houseCode}</if>
+            <if test="houseName != null  and houseName != ''"> and house_name like concat('%', #{houseName}, '%')</if>
+            <if test="ownerId != null "> and owner_id = #{ownerId}</if>
+            <if test="ownerName != null  and ownerName != ''"> and owner_name like concat('%', #{ownerName}, '%')</if>
+            <if test="telephone != null "> and telephone = #{telephone}</if>
+            <if test="roomNum != null "> and room_num = #{roomNum}</if>
+            <if test="unit != null "> and unit = #{unit}</if>
+            <if test="floor != null "> and floor = #{floor}</if>
+            <if test="description != null  and description != ''"> and description = #{description}</if>
+            <if test="liveTime != null "> and live_time = #{liveTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectEstateHouseById" parameterType="Long" resultMap="EstateHouseResult">
+        <include refid="selectEstateHouseVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertEstateHouse" parameterType="EstateHouse" useGeneratedKeys="true" keyProperty="id">
+        insert into estate_house
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="communityName != null">community_name,</if>
+            <if test="communityId != null">community_id,</if>
+            <if test="buildingName != null">building_name,</if>
+            <if test="buildingId != null">building_id,</if>
+            <if test="houseCode != null">house_code,</if>
+            <if test="houseName != null">house_name,</if>
+            <if test="ownerId != null">owner_id,</if>
+            <if test="ownerName != null">owner_name,</if>
+            <if test="telephone != null">telephone,</if>
+            <if test="roomNum != null">room_num,</if>
+            <if test="unit != null">unit,</if>
+            <if test="floor != null">floor,</if>
+            <if test="description != null">description,</if>
+            <if test="liveTime != null">live_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="communityName != null">#{communityName},</if>
+            <if test="communityId != null">#{communityId},</if>
+            <if test="buildingName != null">#{buildingName},</if>
+            <if test="buildingId != null">#{buildingId},</if>
+            <if test="houseCode != null">#{houseCode},</if>
+            <if test="houseName != null">#{houseName},</if>
+            <if test="ownerId != null">#{ownerId},</if>
+            <if test="ownerName != null">#{ownerName},</if>
+            <if test="telephone != null">#{telephone},</if>
+            <if test="roomNum != null">#{roomNum},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="floor != null">#{floor},</if>
+            <if test="description != null">#{description},</if>
+            <if test="liveTime != null">#{liveTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEstateHouse" parameterType="EstateHouse">
+        update estate_house
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="communityName != null">community_name = #{communityName},</if>
+            <if test="communityId != null">community_id = #{communityId},</if>
+            <if test="buildingName != null">building_name = #{buildingName},</if>
+            <if test="buildingId != null">building_id = #{buildingId},</if>
+            <if test="houseCode != null">house_code = #{houseCode},</if>
+            <if test="houseName != null">house_name = #{houseName},</if>
+            <if test="ownerId != null">owner_id = #{ownerId},</if>
+            <if test="ownerName != null">owner_name = #{ownerName},</if>
+            <if test="telephone != null">telephone = #{telephone},</if>
+            <if test="roomNum != null">room_num = #{roomNum},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="floor != null">floor = #{floor},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="liveTime != null">live_time = #{liveTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEstateHouseById" parameterType="Long">
+        delete from estate_house where id = #{id}
+    </delete>
+
+    <delete id="deleteEstateHouseByIds" parameterType="String">
+        delete from estate_house where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

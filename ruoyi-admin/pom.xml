@@ -61,6 +61,17 @@
             <artifactId>ruoyi-generator</artifactId>
         </dependency>
 
+        <!--自己新增的模块-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-his</artifactId>
+            <version>3.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-estate</artifactId>
+            <version>3.7.0</version>
+        </dependency>
     </dependencies>
 
     <build>

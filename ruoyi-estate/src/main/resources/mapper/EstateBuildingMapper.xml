@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.estate.mapper.EstateBuildingMapper">
+    
+    <resultMap type="EstateBuilding" id="EstateBuildingResult">
+        <result property="id"    column="id"    />
+        <result property="communityName"    column="community_name"    />
+        <result property="communityId"    column="community_id"    />
+        <result property="buildingName"    column="building_name"    />
+        <result property="buildingTotalHouseholds"    column="building_total_households"    />
+        <result property="description"    column="description"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectEstateBuildingVo">
+        select id, community_name, community_id, building_name, building_total_households, description, create_by, create_time, update_by, update_time, remark from estate_building
+    </sql>
+
+    <select id="selectEstateBuildingList" parameterType="EstateBuilding" resultMap="EstateBuildingResult">
+        <include refid="selectEstateBuildingVo"/>
+        <where>  
+            <if test="communityName != null  and communityName != ''"> and community_name like concat('%', #{communityName}, '%')</if>
+            <if test="communityId != null "> and community_id = #{communityId}</if>
+            <if test="buildingName != null  and buildingName != ''"> and building_name like concat('%', #{buildingName}, '%')</if>
+            <if test="buildingTotalHouseholds != null "> and building_total_households = #{buildingTotalHouseholds}</if>
+            <if test="description != null  and description != ''"> and description = #{description}</if>
+        </where>
+    </select>
+    
+    <select id="selectEstateBuildingById" parameterType="Long" resultMap="EstateBuildingResult">
+        <include refid="selectEstateBuildingVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertEstateBuilding" parameterType="EstateBuilding" useGeneratedKeys="true" keyProperty="id">
+        insert into estate_building
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="communityName != null">community_name,</if>
+            <if test="communityId != null">community_id,</if>
+            <if test="buildingName != null">building_name,</if>
+            <if test="buildingTotalHouseholds != null">building_total_households,</if>
+            <if test="description != null">description,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="communityName != null">#{communityName},</if>
+            <if test="communityId != null">#{communityId},</if>
+            <if test="buildingName != null">#{buildingName},</if>
+            <if test="buildingTotalHouseholds != null">#{buildingTotalHouseholds},</if>
+            <if test="description != null">#{description},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEstateBuilding" parameterType="EstateBuilding">
+        update estate_building
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="communityName != null">community_name = #{communityName},</if>
+            <if test="communityId != null">community_id = #{communityId},</if>
+            <if test="buildingName != null">building_name = #{buildingName},</if>
+            <if test="buildingTotalHouseholds != null">building_total_households = #{buildingTotalHouseholds},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEstateBuildingById" parameterType="Long">
+        delete from estate_building where id = #{id}
+    </delete>
+
+    <delete id="deleteEstateBuildingByIds" parameterType="String">
+        delete from estate_building where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
